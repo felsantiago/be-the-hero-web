@@ -1,21 +1,23 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Form, Input, Textarea } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import { Container, Content, Section, FormIncident } from './styles';
+import history from '../../services/history';
 
 import api from '../../services/api';
 
 import logoImg from '~/assets/logo.svg';
 
-import { Container, Content, Section, FormIncident } from './styles';
-
 export default function NewIncident() {
-  const history = useHistory();
-
   async function handleNewIncident({ title, description, value }) {
     try {
-      await api.post('incidents', { title, description, value });
+      await api.post('incidents', {
+        title,
+        description,
+        value,
+      });
 
       history.push('/profile');
     } catch (err) {

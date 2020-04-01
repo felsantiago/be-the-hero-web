@@ -27,8 +27,6 @@ export function* signUp({ payload }) {
   try {
     const { name, email, password, whatsapp, city, uf } = payload;
 
-    console.tron.log(payload);
-
     yield call(api.post, 'ongs', {
       name,
       email,
@@ -40,7 +38,11 @@ export function* signUp({ payload }) {
 
     history.push('/');
   } catch (err) {
-    toast.error('Falha no cadastro, verifique seus dados. 😐');
+    if (err.response.status === 400) {
+      toast.error(err.response.data.error);
+    } else {
+      toast.error('Falha no cadastro, verifique seus dados. 😐');
+    }
     yield put(signFailure());
   }
 }
